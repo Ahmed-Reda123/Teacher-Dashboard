@@ -1,13 +1,16 @@
 import React, { useState } from "react";
 import { TextField, Button, Paper, Typography } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import { LoginUser } from "../../redux/Apis/Login";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  const dispatch = useDispatch();
+  const {loginError,loginLoading} = useSelector(state=>state.auth);
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Email:", email, "Password:", password);
+    dispatch(LoginUser({email, password}));
   };
 
   return (
@@ -42,7 +45,7 @@ function Login() {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-
+          {loginError && <p className="text-red-500">{loginError}</p>}
           <div className="pt-2">
             <Button
               type="submit"
@@ -50,7 +53,7 @@ function Login() {
               fullWidth
               className="!bg-blue-600 hover:!bg-blue-700 text-white"
             >
-              Log In
+              {loginLoading ? "Loading..." : "Login"}
             </Button>
           </div>
         </form>
