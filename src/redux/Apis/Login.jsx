@@ -6,8 +6,8 @@ export const LoginUser = createAsyncThunk('/login',async({email,password},{rejec
         const response = await axios.post(`${import.meta.env.VITE_BASEURL}/api/auth/login`,{
             email,password
         });
-        return response.data;
+        return response.data.data;
     } catch (error) {
-        rejectWithValue(error.message || "Something went wrong");
+        return rejectWithValue("Something went wrong");
     }
 })

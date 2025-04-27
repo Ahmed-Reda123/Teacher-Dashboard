@@ -1,1 +1,5 @@
 @import "tailwindcss";
+body{
+    --color-main : #09122C;
+    font-family: "Cairo", sans-serif;
+}

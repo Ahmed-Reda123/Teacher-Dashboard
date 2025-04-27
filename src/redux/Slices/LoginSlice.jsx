@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { LoginUser } from "../Apis/Login";
+import { act } from "react";
 
 const loginSlice = createSlice({
     name : 'login',
@@ -17,9 +18,10 @@ const loginSlice = createSlice({
         })
         .addCase(LoginUser.fulfilled,(state,action)=>{
             state.loginLoading = false;
-            state.token = action.payload.token;
+            state.token = action.payload.access_token;
             state.isAuthintecated = true;
-            localStorage.setItem("token",action.payload.token);
+            localStorage.setItem("token",action.payload.access_token);
+            console.log(action.payload);
         })
         .addCase(LoginUser.rejected,(state,action)=>{
             state.loginLoading = false;
