@@ -59,7 +59,7 @@ function Login() {
             <button
               className="bg-[#09122C] cursor-pointer p-2 w-full rounded-md  text-white"
             >
-              {loginLoading ? "Loading..." : "Login"}
+              {loginLoading ? "جاري الحميل..." : "تسجيل الدخول"}
             </button>
           </div>
         </form>
