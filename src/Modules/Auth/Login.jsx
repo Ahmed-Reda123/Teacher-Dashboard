@@ -27,14 +27,14 @@ function Login() {
           <h2
             className="text-main text-2xl"
           >
-            Login To Teacher Dashboard
+            تسجيل الدخول إلي لوحة تحكم المدرس
           </h2>
         </div>
 
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} dir="rtl">
           <div className="email-field mb-3">
             <TextField
-              label="Email"
+              label="البريد الإلكتروني"
               variant="outlined"
               fullWidth
               value={email}
@@ -49,7 +49,7 @@ function Login() {
               fullWidth
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              dir="rtl"
+              
             />
           </div>
           {loginError && (
