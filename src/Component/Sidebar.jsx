@@ -49,7 +49,7 @@ export const Main = styled("main", {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
   }),
-  marginRight: open ? 0 : `-${drawerWidth}px`,
+  marginLeft: open ? 0 : `-${drawerWidth}px`,
 }));
 
 export const DrawerHeader = styled("div")(({ theme }) => ({
@@ -100,8 +100,11 @@ export default function Sidebar() {
   };
 
   const handleOutsideClick = (event) => {
-  
-    if (open && !event.target.closest('.MuiDrawer-root') && !event.target.closest('.open-drawer-button')) {
+    if (
+      open &&
+      !event.target.closest(".MuiDrawer-root") &&
+      !event.target.closest(".open-drawer-button")
+    ) {
       handleDrawerClose();
     }
   };
@@ -151,7 +154,6 @@ export default function Sidebar() {
                 لوحة تحكم المدرس
               </Link>
             </Box>
-
             <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
               <IconButton onClick={handleMenuOpen} color="inherit">
                 <Avatar />
@@ -183,7 +185,11 @@ export default function Sidebar() {
         >
           <DrawerHeader>
             <IconButton onClick={handleDrawerClose}>
-              {theme.direction === "ltr" ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+              {theme.direction === "ltr" ? (
+                <ChevronRightIcon />
+              ) : (
+                <ChevronLeftIcon />
+              )}
             </IconButton>
           </DrawerHeader>
           <Divider />
