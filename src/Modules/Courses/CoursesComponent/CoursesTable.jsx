@@ -29,7 +29,6 @@ function CoursesTable({courses}) {
                     "السنة",
                     "رقم المادة",
                     "رقم المعلم",
-                    "رقم الملاحظة",
                     "الحالة",
                   ].map((header) => (
                     <TableCell
@@ -56,8 +55,7 @@ function CoursesTable({courses}) {
                     <TableCell>{item.year}</TableCell>
                     <TableCell>{item.materialId}</TableCell>
                     <TableCell>{item.teacherId}</TableCell>
-                    <TableCell>{item.noteFieldId}</TableCell>
-                    <TableCell>{item.active ? "Yes" : "No"}</TableCell>
+                    <TableCell>{item.active ? "نشط" : "غير نشط"}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>

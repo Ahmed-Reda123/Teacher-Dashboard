@@ -1,0 +1,13 @@
+.loader {
+    width: 15px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    animation: l5 1s infinite linear alternate;
+  }
+  
+  @keyframes l5 {
+    0%  {box-shadow: 20px 0 #161a4c, -20px 0 #161a4c22; background: #161a4c;}
+    33% {box-shadow: 20px 0 #161a4c, -20px 0 #161a4c22; background: #161a4c22;}
+    66% {box-shadow: 20px 0 #161a4c22, -20px 0 #161a4c; background: #161a4c22;}
+    100%{box-shadow: 20px 0 #161a4c22, -20px 0 #161a4c; background: #161a4c;}
+  }

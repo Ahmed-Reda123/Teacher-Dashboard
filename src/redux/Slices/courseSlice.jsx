@@ -1,4 +1,3 @@
-// src/redux/Slices/courseSlice.jsx
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { getAllCourses } from '../Apis/course';
 
