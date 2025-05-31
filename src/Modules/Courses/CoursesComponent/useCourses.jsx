@@ -1,10 +1,10 @@
 // components/Courses/useCourses.js
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllCourses } from "../../redux/Apis/course";
+import { getAllCourses } from "../../../redux/Apis/course";
 import axios from "axios";
 import toast from "react-hot-toast";
-import { getAllMaterials } from "../../redux/Apis/materials";
+import { getAllMaterials } from "../../../redux/Apis/materials";
 
 const useCourses = () => {
   const dispatch = useDispatch();

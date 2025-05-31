@@ -1,8 +1,8 @@
 // components/Courses/Course.jsx
 import React from "react";
-import useCourses from "./useCourses";
+import useCourses from "./CoursesComponent/useCourses";
 import Loading from "../../Component/Loading/Loading";
-import CourseDialog from "./CourseDialog";
+import CourseDialog from "./CoursesComponent/CourseDialog";
 import CoursesTable from "./CoursesComponent/CoursesTable";
 
 const Course = () => {

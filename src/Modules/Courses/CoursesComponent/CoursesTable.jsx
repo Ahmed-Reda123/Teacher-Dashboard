@@ -1,5 +1,6 @@
 import { useTheme } from "@emotion/react";
 import { Alert, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow } from "@mui/material";
+import { Link } from "react-router-dom";
 
 
 function CoursesTable({courses}) {
@@ -28,7 +29,7 @@ function CoursesTable({courses}) {
                     "السعر",
                     "السنة",
                     "رقم المادة",
-                    "رقم المعلم",
+                    "اسم المعلم",
                     "الحالة",
                   ].map((header) => (
                     <TableCell
@@ -46,15 +47,15 @@ function CoursesTable({courses}) {
               <TableBody>
                 {courses.map((item) => (
                   <TableRow  key={item.id}>
-                    <TableCell onClick={() => handleItemClick(item.id)}>
-                      {item.name}
+                    <TableCell>
+                     <Link to={`/course/${item.id}`}>{item.name}</Link>
                     </TableCell>
                     <TableCell>{item.description}</TableCell>
                     <TableCell>{item.term}</TableCell>
                     <TableCell>{item.price}</TableCell>
                     <TableCell>{item.year}</TableCell>
                     <TableCell>{item.materialId}</TableCell>
-                    <TableCell>{item.teacherId}</TableCell>
+                    <TableCell>{item.Teacher.firstName} {" "}{item.Teacher.lastName} </TableCell>
                     <TableCell>{item.active ? "نشط" : "غير نشط"}</TableCell>
                   </TableRow>
                 ))}

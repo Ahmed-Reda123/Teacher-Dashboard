@@ -20,3 +20,13 @@ export const getAllCourses = createAsyncThunk(
     }
   }
 );
+export const getOneCourse = createAsyncThunk(
+  "/course/getonecourse",async({id},{rejectWithValue})=>{
+    try {
+      const response = await axios.get(`${import.meta.env.VITE_BASEURL}/api/courses/${id}`);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.message || "حدث خطأ في جلب الدورة");
+    }
+  }
+)
