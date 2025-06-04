@@ -79,7 +79,7 @@ function OneCourse() {
                 {part.Lesson && part.Lesson.length > 0 ? (
                   <ul className="list-disc pr-5 space-y-2 text-sm text-gray-700">
                     {part.Lesson.map((lesson) => (
-                      <li key={lesson.id || lesson.uuid}>{lesson.title || 'درس بدون عنوان'}</li>
+                      <li key={lesson.id || lesson.uuid}>{lesson.name || 'درس بدون عنوان'}</li>
                     ))}
                   </ul>
                 ) : (
