@@ -19,7 +19,9 @@ function App() {
   return (
     <>
       <Toaster />
-      <Sidebar />
+     {isSidebarVisible && (
+        <Sidebar open={open} setOpen={setOpen} />
+      )}
       <Main
         open={open}
         sx={{ flexGrow: 1, paddingY: 8, width: "100%", overflowX: "auto" }}
