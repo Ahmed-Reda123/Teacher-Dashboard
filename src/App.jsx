@@ -9,6 +9,7 @@ import OneCourse from "./Modules/Courses/OneCourse";
 import AddPart from "./Modules/Parts/AddPart";
 import PrivateRoute from "./Components/protectedRoutes";
 import AddLesson from "./Modules/Lesson/AddLesson";
+import AddExam from "./Modules/Exam/AddExam";
 function App() {
    const [open, setOpen] = useState(false);
   const location = useLocation();
@@ -19,6 +20,7 @@ function App() {
   return (
     <>
       <Toaster />
+
      {isSidebarVisible && (
         <Sidebar open={open} setOpen={setOpen} />
       )}
@@ -33,6 +35,7 @@ function App() {
           <Route path="/course/:id" element={<PrivateRoute><OneCourse /></PrivateRoute>} />
           <Route path="/addpart/:id" element={<PrivateRoute><AddPart /></PrivateRoute>} />
           <Route path="/addlesson/:id" element={<PrivateRoute><AddLesson /></PrivateRoute>} />
+          <Route path="/exams" element={<PrivateRoute><AddExam /></PrivateRoute>} />
         </Routes>
       </Main>
     </>
