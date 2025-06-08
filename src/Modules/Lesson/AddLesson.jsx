@@ -42,12 +42,15 @@ function FileSelector({ file, onFileChange }) {
   );
 }
 
-function UploadProgress({ progress }) {
+function UploadProgress({ progress, loaded, total }) {
   return (
     <Box className="w-full">
       <LinearProgress variant="determinate" value={progress} />
       <Typography variant="body2" className="text-right mt-1 text-green-700">
-        {`جاري الرفع: ${progress}%`}
+        {`جاري الرفع: ${progress}%`} <br />
+        {loaded != null && total != null && (
+          <span>{`تم تحميل ${Math.round(loaded /(1024*1024))} من ${Math.round(total /(1024*1024))} ميجابايت`}</span>
+        )}
       </Typography>
     </Box>
   );
@@ -56,11 +59,17 @@ function UploadProgress({ progress }) {
 function FileUpload({ onUploadSuccess }) {
   const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [uploadProgress, setUploadProgress] = useState(0);
+
+  // State as object to track progress, loaded bytes, and total bytes
+  const [uploadProgress, setUploadProgress] = useState({
+    progress: 0,
+    loaded: 0,
+    total: 0,
+  });
 
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
-    setUploadProgress(0);
+    setUploadProgress({ progress: 0, loaded: 0, total: 0 });
   };
 
   const handleFileUpload = async () => {
@@ -75,7 +84,7 @@ function FileUpload({ onUploadSuccess }) {
 
     try {
       setLoading(true);
-      setUploadProgress(0);
+      setUploadProgress({ progress: 0, loaded: 0, total: 0 });
       const token = localStorage.getItem("token");
 
       const { data } = await axios.post(
@@ -87,23 +96,28 @@ function FileUpload({ onUploadSuccess }) {
             Authorization: `Bearer ${token}`,
           },
           onUploadProgress: (event) => {
-            const percent = Math.round((event.loaded * 100) / event.total);
-            setUploadProgress(percent);
+            if (event.lengthComputable) {
+              const percent = Math.round((event.loaded * 100) / event.total);
+              setUploadProgress({
+                progress: percent,
+                loaded: event.loaded,
+                total: event.total,
+              });
+            }
           },
         }
       );
 
       sessionStorage.setItem("uploadedFileId", data.data);
       toast.success("تم رفع الملف بنجاح!");
-      setUploadProgress(100);
+      setUploadProgress({ progress: 100, loaded: uploadProgress.total, total: uploadProgress.total });
       setFile(null);
 
-      // Move to next step after upload success
       if (onUploadSuccess) onUploadSuccess();
     } catch (error) {
       console.error(error);
       toast.error("فشل في رفع الملف");
-      setUploadProgress(0);
+      setUploadProgress({ progress: 0, loaded: 0, total: 0 });
     } finally {
       setLoading(false);
     }
@@ -112,7 +126,13 @@ function FileUpload({ onUploadSuccess }) {
   return (
     <div className="space-y-6 max-w-md mx-auto">
       <FileSelector file={file} onFileChange={handleFileChange} />
-      {loading && <UploadProgress progress={uploadProgress} />}
+      {loading && (
+        <UploadProgress
+          progress={uploadProgress.progress}
+          loaded={uploadProgress.loaded}
+          total={uploadProgress.total}
+        />
+      )}
       <div className="flex justify-end items-center gap-2">
         <button
           onClick={handleFileUpload}
@@ -194,7 +214,7 @@ function AddLesson() {
   return (
     <div
       dir="rtl"
-      className="max-w-xl mx-auto mt-10 p-6 bg-white rounded-lg shadow-md"
+      className="max-w-4xl mx-auto mt-10 p-6 bg-white rounded-lg shadow-md"
     >
       <Typography
         variant="h5"
