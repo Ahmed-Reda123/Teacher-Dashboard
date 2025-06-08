@@ -1,7 +1,7 @@
 // components/Courses/Course.jsx
 import React from "react";
 import useCourses from "./CoursesComponent/useCourses";
-import Loading from "../../Component/Loading/Loading";
+import Loading from "../../Components/Loading/Loading";
 import CourseDialog from "./CoursesComponent/CourseDialog";
 import CoursesTable from "./CoursesComponent/CoursesTable";
 

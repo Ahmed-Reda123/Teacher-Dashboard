@@ -46,7 +46,7 @@ function AddPart() {
   };
 
   return (
-    <div className="max-w-xl mx-auto mt-10 bg-white shadow-md p-6 rounded-lg text-right">
+    <div className=" mx-auto mt-10 bg-white shadow-md p-6 rounded-lg text-right">
       <Toaster />
 
       <h2 className="text-2xl font-bold mb-6">إضافة جزء جديد للدورة رقم {id}</h2>
@@ -65,7 +65,7 @@ function AddPart() {
         </div>
 
         <div>
-          <label className="block mb-1 text-sm">رقم الجزء</label>
+          <label className="block mb-1 text-sm">ترتيب الجزء</label>
           <input
             type="number"
             name="number"
@@ -87,12 +87,14 @@ function AddPart() {
           />
         </div>
 
-        <button
+  <div className="flex justify-center items-center">
+          <button
           type="submit"
-          className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded"
+          className="bg-main cursor-pointer text-white py-2 px-4 rounded"
         >
           إضافة الجزء
         </button>
+  </div>
       </form>
     </div>
   );

@@ -14,6 +14,7 @@ export const getAllMaterials =createAsyncThunk(
                     },
                 }
             )
+            return response.data;
         }catch(error){
             return rejectWithValue(error.message || "Error Fetching Materials")
         }
