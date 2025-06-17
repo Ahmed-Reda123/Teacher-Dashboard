@@ -4,13 +4,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllCourses } from "../../../redux/Apis/course";
 import axios from "axios";
 import toast from "react-hot-toast";
-import { getAllMaterials } from "../../../redux/Apis/materials";
+import { getTeacherMaterial } from "../../../redux/Apis/Material";
+
 
 const useCourses = () => {
   const dispatch = useDispatch();
   const { courses, loading, error } = useSelector((state) => state.course);
   const {
-    materials,
+    teacherMaterials : materials,
     loading: materialLoading,
     error: materialError,
   } = useSelector((state) => state.material);
@@ -28,7 +29,7 @@ const useCourses = () => {
 
   useEffect(() => {
     dispatch(getAllCourses());
-    dispatch(getAllMaterials());
+    dispatch(getTeacherMaterial());
   }, [dispatch]);
 
   const handleInputChange = (e) => {
@@ -60,6 +61,31 @@ const useCourses = () => {
       console.error(error);
     }
   };
+  const [togglingId, setTogglingId] = useState(null);
+
+  const handleToggleCourse = async ({ id }) => {
+    setTogglingId(id);
+    const toastId = toast.loading("جاري التحميل");
+    try {
+      const token = localStorage.getItem("token");
+      const response = await axios.patch(
+        `${import.meta.env.VITE_BASEURL}/api/courses/${id}/toggle-active`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      toast.success("تم التحديث بنجاح", { id: toastId });
+      // dispatch(getAllCourses());
+    } catch (error) {
+      toast.error("حدث خطأ أثناء التحديث", { id: toastId });
+      console.error(error);
+    } finally {
+      setTogglingId(null);
+    }
+  };
 
   return {
     courses,
@@ -74,6 +100,8 @@ const useCourses = () => {
     setFormData,
     handleInputChange,
     handleAddCourse,
+    handleToggleCourse,
+    togglingId,
   };
 };
 

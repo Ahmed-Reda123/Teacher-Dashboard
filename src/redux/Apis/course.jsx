@@ -7,7 +7,7 @@ export const getAllCourses = createAsyncThunk(
     try {
       const token = localStorage.getItem("token");
       const response = await axios.get(
-        `${import.meta.env.VITE_BASEURL}/api/courses`,
+        `${import.meta.env.VITE_BASEURL}/api/courses/teacher`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

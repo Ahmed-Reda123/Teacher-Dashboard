@@ -18,13 +18,16 @@ const Course = () => {
     formData,
     handleInputChange,
     handleAddCourse,
+    handleToggleCourse,
+    togglingId
   } = useCourses();
 
   return (
     <div>
       {error && <p>Error: {error}</p>}
 
-      <div className="mt-15 text-right">
+      <div className="mt-15 flex justify-between items-center">
+        <h1 className="text-2xl font-bold text-main">الدورات</h1>
         <button
           onClick={() => setShowDialog(true)}
           className="bg-main text-white px-4 py-2 rounded cursor-pointer"
@@ -48,7 +51,7 @@ const Course = () => {
             <Loading />
           </div>
         ) : (
-          <CoursesTable courses={courses} />
+          <CoursesTable courses={courses} handleToggleCourse={handleToggleCourse} togglingId={togglingId}/>
         )}
       </div>
     </div>

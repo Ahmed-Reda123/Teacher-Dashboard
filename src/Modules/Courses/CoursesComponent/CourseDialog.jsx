@@ -1,12 +1,35 @@
 // components/Courses/CourseDialog.jsx
-import { Dialog, DialogTitle, DialogActions, Button } from "@mui/material";
+import {
+  Dialog,
+  DialogTitle,
+  DialogActions,
+  Button,
+  Switch,
+} from "@mui/material";
 
-const CourseDialog = ({ open, onClose, onSubmit, formData, onChange, materials }) => {
+const CourseDialog = ({
+  open,
+  onClose,
+  onSubmit,
+  formData,
+  onChange,
+  materials,
+}) => {
+  console.log("m",materials);
+  
   return (
     <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth>
       <DialogTitle>أضف كورس جديد</DialogTitle>
       <div className="flex flex-col justify-center items-center py-2 px-4 gap-2">
-        {["name", "description", "term", "price", "year", "materialId"].map((field) => (
+        {[
+          "name",
+          "description",
+          "term",
+          "price",
+          "year",
+          "materialId",
+          "active",
+        ].map((field) =>
           field === "term" ? (
             <select
               key={field}
@@ -30,10 +53,31 @@ const CourseDialog = ({ open, onClose, onSubmit, formData, onChange, materials }
               <option value="">اختر المادة</option>
               {materials.map((material) => (
                 <option key={material.id} value={material.id}>
-                  {material.name}
+                  {material.Material.name}
                 </option>
               ))}
             </select>
+          ) : field === "active" ? (
+            <div
+              key={field}
+              className="w-full flex justify-between items-center border-2 border-gray-300 p-2 rounded-lg"
+            >
+              <label htmlFor="active">نشط</label>
+              <Switch
+                id="active"
+                name="active"
+                checked={formData.active}
+                onChange={(e) =>
+                  onChange({
+                    target: {
+                      name: "active",
+                      value: e.target.checked,
+                    },
+                  })
+                }
+                color="primary"
+              />
+            </div>
           ) : (
             <input
               key={field}
@@ -43,19 +87,26 @@ const CourseDialog = ({ open, onClose, onSubmit, formData, onChange, materials }
               value={formData[field]}
               onChange={onChange}
               placeholder={
-                field === "name" ? "اسم الدورة" :
-                field === "description" ? "الوصف" :
-                field === "price" ? "أضف السعر" :
-                field === "year" ? "العام الدراسي" :
-                ""
+                field === "name"
+                  ? "اسم الدورة"
+                  : field === "description"
+                  ? "الوصف"
+                  : field === "price"
+                  ? "أضف السعر"
+                  : field === "year"
+                  ? "العام الدراسي"
+                  : ""
               }
             />
           )
-        ))}
+        )}
       </div>
       <DialogActions>
         <div className="flex justify-center items-center gap-2">
-          <button onClick={onClose} className="bg-gray-700 text-white p-2 rounded-lg cursor-pointer">
+          <button
+            onClick={onClose}
+            className="bg-gray-700 text-white p-2 rounded-lg cursor-pointer"
+          >
             Cancel
           </button>
           <Button onClick={onSubmit} variant="contained" color="primary">
