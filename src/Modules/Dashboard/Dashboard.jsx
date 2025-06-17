@@ -7,6 +7,7 @@ import {
 } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { getTeacherMaterial } from "../../redux/Apis/Material";
+import Loading from "../../Components/Loading/Loading";
 
 export default function TeacherDashboard() {
   const { teacherMaterials, loading, error } = useSelector(state => state.material);
@@ -47,7 +48,9 @@ export default function TeacherDashboard() {
     <div dir="rtl" className="flex items-center justify-center py-20">
       <div className="w-full px-4 md:px-8">
         {loading ? (
-          <p className="text-center text-gray-600">جاري التحميل...</p>
+          <div className="flex justify-center items-center my-12">
+            <Loading/>
+          </div>
         ) : error ? (
           <p className="text-center text-red-600">خطأ: {error}</p>
         ) : (
