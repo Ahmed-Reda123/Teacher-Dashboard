@@ -10,6 +10,9 @@ import AddPart from "./Modules/Parts/AddPart";
 import PrivateRoute from "./Components/protectedRoutes";
 import AddLesson from "./Modules/Lesson/AddLesson";
 import AddExam from "./Modules/Exam/AddExam";
+import Exams from "./Modules/Exam/Exams";
+import OneExam from "./Modules/Exam/OneExam";
+import AddQuestion from "./Modules/Exam/AddQuestion";
 function App() {
    const [open, setOpen] = useState(false);
   const location = useLocation();
@@ -35,7 +38,9 @@ function App() {
           <Route path="/course/:id" element={<PrivateRoute><OneCourse /></PrivateRoute>} />
           <Route path="/addpart/:id" element={<PrivateRoute><AddPart /></PrivateRoute>} />
           <Route path="/addlesson/:id" element={<PrivateRoute><AddLesson /></PrivateRoute>} />
-          <Route path="/exams" element={<PrivateRoute><AddExam /></PrivateRoute>} />
+          <Route path="/exams" element={<PrivateRoute><Exams /></PrivateRoute>} />
+          <Route path="/exam/:id" element={<PrivateRoute><OneExam /></PrivateRoute>} />
+          <Route path="/addquestion/:id" element={<PrivateRoute><AddQuestion /></PrivateRoute>} />
         </Routes>
       </Main>
     </>
