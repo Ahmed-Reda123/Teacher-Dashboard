@@ -88,7 +88,7 @@ function FileUpload({ onUploadSuccess }) {
       const token = localStorage.getItem("token");
 
       const { data } = await axios.post(
-        `${import.meta.env.VITE_BASEURL}/api/local/file`,
+        `${import.meta.env.VITE_BASEURL}/api/aws-s3/file`,
         formData,
         {
           headers: {

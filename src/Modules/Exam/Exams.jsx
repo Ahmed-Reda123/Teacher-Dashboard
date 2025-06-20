@@ -23,9 +23,9 @@ function Exams() {
   }
   return (
     <div className="p-4">
-     <div className="flex justify-between items-center ">
+     <div className="flex justify-between items-center my-4">
          <h2 className="text-xl font-bold mb-4">الاختبارات</h2>
-         <Link to={'/addexam'} className="bg-main flex justify-center items-center rounded p-1 text-white">أضافة اختبار</Link>
+         <Link to={'/addexam'} className="bg-main flex justify-center items-center rounded p-2 text-white">أضافة اختبار</Link>
      </div>
 
       {error && <p className="text-red-500">Error: {error}</p>}
@@ -33,7 +33,7 @@ function Exams() {
       {!loading && !error && (
         <ul className="space-y-2">
           {exams.length === 0 ? (
-            <li>No exams found.</li>
+            <li>لا توجد اختبارات متاحة.</li>
           ) : (
             exams.map((exam) => (
               <li

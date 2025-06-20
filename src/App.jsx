@@ -38,6 +38,7 @@ function App() {
           <Route path="/course/:id" element={<PrivateRoute><OneCourse /></PrivateRoute>} />
           <Route path="/addpart/:id" element={<PrivateRoute><AddPart /></PrivateRoute>} />
           <Route path="/addlesson/:id" element={<PrivateRoute><AddLesson /></PrivateRoute>} />
+          <Route path="/addexam" element={<PrivateRoute><AddExam /></PrivateRoute>} />
           <Route path="/exams" element={<PrivateRoute><Exams /></PrivateRoute>} />
           <Route path="/exam/:id" element={<PrivateRoute><OneExam /></PrivateRoute>} />
           <Route path="/addquestion/:id" element={<PrivateRoute><AddQuestion /></PrivateRoute>} />
