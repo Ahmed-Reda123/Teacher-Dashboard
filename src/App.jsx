@@ -13,6 +13,7 @@ import AddExam from "./Modules/Exam/AddExam";
 import Exams from "./Modules/Exam/Exams";
 import OneExam from "./Modules/Exam/OneExam";
 import AddQuestion from "./Modules/Exam/AddQuestion";
+import Results from "./Modules/Results/Results";
 function App() {
    const [open, setOpen] = useState(false);
   const location = useLocation();
@@ -42,6 +43,7 @@ function App() {
           <Route path="/exams" element={<PrivateRoute><Exams /></PrivateRoute>} />
           <Route path="/exam/:id" element={<PrivateRoute><OneExam /></PrivateRoute>} />
           <Route path="/addquestion/:id" element={<PrivateRoute><AddQuestion /></PrivateRoute>} />
+          <Route path="/results/:id" element={<PrivateRoute><Results/></PrivateRoute>}/>
         </Routes>
       </Main>
     </>

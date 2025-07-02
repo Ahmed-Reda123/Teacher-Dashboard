@@ -79,6 +79,7 @@ const useCourses = () => {
       );
       toast.success("تم التحديث بنجاح", { id: toastId });
       // dispatch(getAllCourses());
+      window.location.reload();
     } catch (error) {
       toast.error("حدث خطأ أثناء التحديث", { id: toastId });
       console.error(error);

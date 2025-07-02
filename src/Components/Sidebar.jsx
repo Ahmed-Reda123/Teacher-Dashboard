@@ -124,7 +124,7 @@ export default function Sidebar() {
     { text: "الرئيسية", icon: <HomeIcon />, route: "/" },
     { text: "الدورات", icon: <MenuBookIcon />, route: "/course" },
     { text: "الاختبارات", icon: <DescriptionIcon />, route: "/exams" },
-    { text: "المستخدمين", icon: <GroupIcon />, route: "/users" },
+    // { text: "المستخدمين", icon: <GroupIcon />, route: "/users" },
   ];
 
   return (

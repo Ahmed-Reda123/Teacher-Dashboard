@@ -22,7 +22,12 @@ function OneExam() {
   const [editQuestion, setEditQuestion] = useState(null);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [questionToDelete, setQuestionToDelete] = useState(null);
-
+  const [editExamDialogOpen, setEditExamDialogOpen] = useState(false);
+  const [examFormData, setExamFormData] = useState({
+    name: "",
+    description: "",
+    date: new Date().toISOString().slice(0, 16), // YYYY-MM-DDTHH:mm
+  });
   const { exams, examQuestions, loading, error } = useSelector(
     (state) => state.exams
   );
@@ -61,7 +66,35 @@ function OneExam() {
       console.error(error);
     }
   };
+  const handleExamEditSubmit = async () => {
+    const toastId = toast.loading("جاري التعديل...");
+    try {
+      const token = localStorage.getItem("token");
 
+      const payload = {
+        name: examFormData.name,
+        description: examFormData.description,
+        date: new Date(examFormData.date).toISOString(),
+      };
+
+      await axios.patch(
+        `${import.meta.env.VITE_BASEURL}/api/exams/${id}`,
+        payload,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      toast.success("تم التعديل بنجاح", { id: toastId });
+      setEditExamDialogOpen(false);
+      dispatch(getAllExams()); // Refresh exam data
+    } catch (error) {
+      console.error(error);
+      toast.error("فشل التعديل", { id: toastId });
+    }
+  };
   const handleEditSave = async (updatedData) => {
     const toastId = toast.loading("جاري التحميل");
     try {
@@ -130,11 +163,36 @@ function OneExam() {
 
       {exam ? (
         <div className="border p-4 rounded shadow-sm">
-          <h3 className="text-xl font-semibold">{exam.name}</h3>
-          <p>{exam.description}</p>
-          <p className="text-sm text-gray-600">
-            التاريخ: {new Date(exam.date).toLocaleDateString()}
-          </p>
+          <div className="flex justify-between items-center">
+            <div className="flex flex-col">
+              <h3 className="text-xl font-semibold">{exam.name}</h3>
+              <p>{exam.description}</p>
+              <p className="text-sm text-gray-600">
+                التاريخ: {new Date(exam.date).toLocaleDateString()}
+              </p>
+            </div>
+            <Link
+              to={`/results/${exam.id}`}
+              className="text-white bg-main p-2 rounded-lg"
+            >
+              عرض نتائج الطلاب
+            </Link>
+          </div>
+          <div className="flex gap-2 mt-2">
+            <button
+              className="bg-gray-400 p-2 rounded text-black cursor-pointer flex items-center gap-1"
+              onClick={() => {
+                setExamFormData({
+                  name: exam.name || "",
+                  description: exam.description || "",
+                  date: new Date(exam.date).toISOString().slice(0, 16),
+                });
+                setEditExamDialogOpen(true);
+              }}
+            >
+              <MdEdit /> تعديل
+            </button>
+          </div>
         </div>
       ) : (
         <p>لم يتم العثور على هذا الاختبار.</p>
@@ -213,15 +271,75 @@ function OneExam() {
           <Typography>هل أنت متأكد أنك تريد حذف هذا السؤال؟</Typography>
         </DialogContent>
         <DialogActions>
-          <button className="bg-gray-600 cursor-pointer text-white p-2 rounded-lg" onClick={() => setDeleteDialogOpen(false)} color="inherit">
+          <button
+            className="bg-gray-600 cursor-pointer text-white p-2 rounded-lg"
+            onClick={() => setDeleteDialogOpen(false)}
+            color="inherit"
+          >
             إلغاء
           </button>
-          <button className="bg-red-600 mx-2 cursor-pointer text-white p-2 rounded-lg" onClick={confirmDelete} color="error">
+          <button
+            className="bg-red-600 mx-2 cursor-pointer text-white p-2 rounded-lg"
+            onClick={confirmDelete}
+            color="error"
+          >
             حذف
           </button>
         </DialogActions>
       </Dialog>
-
+      <Dialog
+        open={editExamDialogOpen}
+        onClose={() => setEditExamDialogOpen(false)}
+        maxWidth="sm"
+        fullWidth
+      >
+        <DialogTitle>تعديل الاختبار</DialogTitle>
+        <DialogContent className="space-y-4 mt-2">
+          <input
+            type="text"
+            placeholder="اسم الاختبار"
+            className="border p-2 rounded w-full"
+            value={examFormData.name}
+            onChange={(e) =>
+              setExamFormData({ ...examFormData, name: e.target.value })
+            }
+          />
+          <textarea
+            placeholder="الوصف"
+            className="border p-2 rounded w-full"
+            rows={3}
+            value={examFormData.description}
+            onChange={(e) =>
+              setExamFormData({ ...examFormData, description: e.target.value })
+            }
+          />
+          <input
+            type="datetime-local"
+            className="border p-2 rounded w-full"
+            value={examFormData.date}
+            onChange={(e) =>
+              setExamFormData({ ...examFormData, date: e.target.value })
+            }
+          />
+        </DialogContent>
+        <DialogActions>
+          <div className="flex gap-2">
+            <button
+              className="bg-gray-600 cursor-pointer text-white p-2 rounded-lg"
+              onClick={() => setEditExamDialogOpen(false)}
+            >
+              إلغاء
+            </button>
+            <Button
+              onClick={handleExamEditSubmit}
+              color="primary"
+              variant="contained"
+            >
+              حفظ
+            </Button>
+          </div>
+        </DialogActions>
+      </Dialog>
       {editQuestion && (
         <EditQuestionDialog
           question={editQuestion}
