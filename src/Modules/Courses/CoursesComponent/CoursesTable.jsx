@@ -42,9 +42,14 @@ function CoursesTable({ courses, handleToggleCourse, togglingId }) {
     const toastId = toast.loading("جاري حذف الكورس...");
 
     try {
-      await axios.delete(`/api/courses/${selectedCourseId}`);
+      const token = localStorage.getItem("token");
+      await axios.delete(`${import.meta.env.VITE_BASEURL}/api/courses/${selectedCourseId}`,{
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       toast.success("تم حذف الكورس بنجاح", { id: toastId });
-
+      window.location.reload();
       // Optionally: refetch or manually remove course from UI
     } catch (error) {
       toast.error("حدث خطأ أثناء الحذف", { id: toastId });
