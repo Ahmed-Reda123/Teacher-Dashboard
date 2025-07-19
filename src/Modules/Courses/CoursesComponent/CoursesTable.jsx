@@ -50,7 +50,6 @@ function CoursesTable({ courses, handleToggleCourse, togglingId }) {
       });
       toast.success("تم حذف الكورس بنجاح", { id: toastId });
       window.location.reload();
-      // Optionally: refetch or manually remove course from UI
     } catch (error) {
       toast.error("حدث خطأ أثناء الحذف", { id: toastId });
     } finally {

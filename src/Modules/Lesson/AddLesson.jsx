@@ -79,7 +79,7 @@ function FileUpload({ onUploadSuccess }) {
     }
 
     const formData = new FormData();
-    formData.append("category", "GLOBAL");
+    formData.append("category", "LESSON");
     formData.append("file", file);
 
     try {
